@@ -1,9 +1,13 @@
 import streamlit as st 
 import pandas as pd 
+
+
 # Set the app title 
 st.title('Assignment 2') 
 # Add a welcome message 
-st.write('Welcome to my Streamlit app!') 
+st.subheader(
+    'Image search engine')
+
 # Create a text input 
 widgetuser_input = st.text_input('Enter a search query', 'Hello, Streamlit!') 
 
