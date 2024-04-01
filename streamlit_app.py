@@ -12,3 +12,4 @@ st.write('Customized Message:', widgetuser_input)
 df = pd.read_csv(r'./data/data.csv')
 
 st.write(df)
+st.image('https://cdn.openphoto.net/thumbs2/volumes/mike/20171103/openphotonet_MAJ_4498.JPG', caption="searched image")
