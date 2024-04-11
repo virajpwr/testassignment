@@ -1,82 +1,126 @@
 import streamlit as st 
 import pandas as pd 
-import re
-import os
 import numpy as np
 import yaml
 import pickle
 
-## Testing branch
+
+from tqdm import tqdm
+ 
+# utilities
+from collections import defaultdict
+import re
+import numpy as np
+import pandas as pd
+from copy import deepcopy
+import os
+from itertools import chain
+import operator
+
+
+import math
+from functools import lru_cache
+import math
+import operator
+from tqdm import tqdm
+import itertools
+from collections import Counter
+from dataclasses import dataclass
+from math import log
+import pickle
+
+from src import preprocess, invertedindex, model
+
+
+
+def mapping(query, doc):    
+    ''' 
+    - Map each query id with all the document ids.
+    
+    :param query: dictionary with queryid and query as key-value pair.
+    :param doc: dictionary with docid and text as key-value pairs.
+    
+    :return: dictionary with queryid as key and list of document ids as value.
+    '''    
+    mappings = {}
+    for key, value in query.items():
+        for k, v in doc.items():
+            doc_keys = list(doc.keys())
+            doc_keys = [int(i) for i in doc_keys]
+            mappings[int(key)] = doc_keys 
+    return mappings
+
+def generate_index(doc_collection):
+    index = invertedindex.InvertedIndexDocs(doc_collection)
+    index.create_index()
+    return index
 
 
 # Set the app title 
 st.title('Assignment 2') 
+
+st.subheader(
+    '**👈 Please select the options on the sidebar for search query examples**')
+
 # Add a welcome message 
 st.subheader(
     'Image search engine')
 
 
-def vectorise_document(docs, vocab):
-    vectors = np.zeros(len(vocab))
-    for token in docs:
-        if token in vocab:
-            vectors[vocab.index(token)] += 1
-    return vectors
+def search_query(input_query, docs, inv):
+    map_doc_queries = mapping(input_query, docs)
+    model = model.VSM(inv, map_doc_queries)
 
-def calculate_cosine_similarity(u, v):
-    score = np.dot(u, v) / (np.linalg.norm(u) * np.linalg.norm(v))
-    if np.isnan(score):
-      score = 0
-    return score
+    # loop through each query and perform ranking
+    ranking = {qid: model.rank(qid, query) for qid, query in clean_query.items()}
 
-def search_query(input_query, vectors, vocab, data, stop_words):
-    pattern = r'\b[A-Za-z]+\b'
-    query_words = re.findall(pattern, input_query)
-    # lowercase 
-    query_words = [word.lower() for word in query_words]
-    # remove stopwords
-    query_words = [word for word in query_words if word not in stop_words]
-    query_vec = vectorise_document(query_words, vocab)
-    similarities = [calculate_cosine_similarity(query_vec, vector) for vector in vectors]
-    ranking = data.copy()
-    ranking['vsm_score'] = similarities
-    ranking = ranking.sort_values(by='vsm_score', ascending=False)
-    ranking['ranks'] = [i for i in range(1, len(similarities) + 1 )]
-    ranking = ranking.loc[ranking['vsm_score'] >= 0.1].iloc[:20]
-    ranking_dict = ranking[['image_id','image_name','vsm_score','image_source','photographer']].set_index('image_id').to_dict()
+    filter_rank = {k: v for k, v in ranking[1].items() if v > 0.1}
+    result = defaultdict(dict)
+    for key, value in filter_rank.items():
+        result[key]['score'] = value
+        result[key]['url'] = urls[key]
+        result[key]['image_name'] = image_data[key]['image_name']
+        result[key]['photographer'] = image_data[key]['photographer']
+        result[key]['image_id'] = key
     return ranking_dict
     
-st.subheader(
-    '**👈 Please select the options on the sidebar to see different analysis performed on the data.**')
+
 genre = st.sidebar.radio(
     "Please select type",
     ('Image Search', 'Seach Examples'))
 
 if genre == 'Image Search':
+    with open(r'./data/image_data.pkl', 'rb') as f:
+        image_data = pickle.load(f)
+        
 
-    widgetuser_input = st.text_input('Enter a search query') 
+    urls= {image_id: image_data[image_id]['image_source'] for image_id in image_data}
+    documents= {image_id: image_data[image_id]['image_details'] for image_id in image_data}
     
-    indexed_images_data = pd.read_csv(r'./data/data.csv')
+    inv_index = generate_index(documents)
     
     with open(r'./data/stopwords.yml') as file:
         config = yaml.load(file, Loader=yaml.FullLoader)
-    
     stopwords = set(config['stop words'])
-    
-    with open(r'./data/vocabulary.pkl', 'rb') as f:
-        vocabulary = pickle.load(f)
-    
 
-    with open(r'./data/vectors.pkl', 'rb') as f:
-        vectors = pickle.load(f)
+    widgetuser_input = st.text_input('Enter a search query') 
     
-    ranking_dict = search_query(widgetuser_input, vectors, vocabulary, indexed_images_data, stopwords)
+    pattern = r'\b[A-Za-z]+\b'
+    query_words = re.findall(pattern, widgetuser_input)
+
+    # lowercase 
+    query_words = [word.lower() for word in query_words]
+    # remove stopwords
+    query_words = [word for word in query_words if word not in stopwords]
+
+    query = {1:query_words}
+    clean_query = {key: ' '.join(value) for key, value in query.items()}
+
+    ranking_dict = search_query(widgetuser_input, documents, inv_index)
     
-    for key,value in ranking_dict['image_name'].items():
-        st.write(f"Image ID: {key} | Image Name: {value} | Similarity Score: {ranking_dict['vsm_score'][key]} | Photographer: {ranking_dict['photographer'][key]}")
-        
-        st.image(ranking_dict['image_source'][key], caption="searched image")
-    # st.write('Customized Message:', widgetuser_input)
+    for key, value in ranking_dict.items():
+        st.write(f'Image ID {value["image_id"]} | Image Name {value["image_name"]} | Similarity Score: {value["score"]} | Photographer: {value["photographer"]}') 
+        st.image(value["url"], caption="searched image")
 
 
 if genre == 'Seach Examples':
