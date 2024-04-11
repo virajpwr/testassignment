@@ -149,7 +149,6 @@ mergedeep==1.3.0
 missingno==0.4.2
 mistune==3.0.2
 mkl-fft==1.3.1
-mkl-random @ file:///C:/ci/mkl_random_1626186163140/work
 mkl-service==2.4.0
 mlxtend==0.19.0
 msal==1.24.0
@@ -166,13 +165,11 @@ nbformat==5.8.0
 ndg-httpsclient==0.5.1
 nervaluate==0.1.7
 nest-asyncio==1.5.8
-networkx @ file:///tmp/build/80754af9/networkx_1633639043937/work
 nltk==3.4.5
 notebook==6.5.6
 notebook-shim==0.2.3
 num2words==0.5.13
-numba @ file:///C:/b/abs_e53pp2e4k7/croot/numba_1670258349527/work
-numpy @ file:///C:/ci/numpy_and_numpy_base_1653574840943/work
+numpy
 oauthlib==3.2.2
 open3d==0.10.0.0
 opencv-python==4.3.0.36
