@@ -116,7 +116,7 @@ if genre == 'Image Search':
     query = {1:query_words}
     clean_query = {key: ' '.join(value) for key, value in query.items()}
 
-    ranking_dict = search_query(widgetuser_input, documents, inv_index)
+    ranking_dict = search_query(clean_query, documents, inv_index)
     
     for key, value in ranking_dict.items():
         st.write(f'Image ID {value["image_id"]} | Image Name {value["image_name"]} | Similarity Score: {value["score"]} | Photographer: {value["photographer"]}') 
