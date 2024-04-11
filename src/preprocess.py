@@ -1,7 +1,5 @@
 # import necessary libraries
 
-import xml.etree.ElementTree as ET
-import csv
 from tqdm import tqdm
  
 # utilities
@@ -38,8 +36,7 @@ from nltk import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 from num2words import num2words
-nltk.download('punkt', quiet=True)
-nltk.download('stopwords', quiet=True)
+
 
 class PreprocessText:
     def __init__(self, text):
