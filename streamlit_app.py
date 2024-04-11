@@ -196,7 +196,7 @@ def search_query(input_query, docs, inv):
         result[key]['image_name'] = image_data[key]['image_name']
         result[key]['photographer'] = image_data[key]['photographer']
         result[key]['image_id'] = key
-    return ranking_dict
+    return result
     
 
 genre = st.sidebar.radio(
