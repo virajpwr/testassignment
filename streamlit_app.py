@@ -235,32 +235,11 @@ if genre == 'Image Search':
     for key, value in ranking_dict.items():
         st.write(f'Image ID {value["image_id"]} | Image Name {value["image_name"]} | Similarity Score: {value["score"]} | Photographer: {value["photographer"]}') 
         st.image(value["url"], caption="searched image")
-''' 
 
-white horse in a field
-african capybara
-images by Michael Jastremski 
-strawberry mansion bridge
-philadelphia river 
-croatian wild duck
-cute rabbit
-green tomatoes on vine
-daffodil yellow petals
-Scuba diving with coral reef
-national park in croatia
-japanese temple
-Tokyo Disney Land
-westminster cathederal sign
-London Tube 
-eiffel tower at night
-tulipe flower
-
-''' 
 
 if genre == 'Seach Examples':
-    with st.echo():
-        st.write(f'''
-                 white horse in a field
+    st.markdown(f'''
+                                white horse in a field
 african capybara
 images by Michael Jastremski 
 strawberry mansion bridge
@@ -277,5 +256,7 @@ westminster cathederal sign
 London Tube 
 eiffel tower at night
 tulipe flower
-                 
-                 ''')
+                
+                
+                ''')
+
