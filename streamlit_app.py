@@ -238,8 +238,8 @@ if genre == 'Image Search':
 
 
 if genre == 'Seach Examples':
-    st.markdown(f'''
-                                white horse in a field
+    
+    multi = '''white horse in a field
 african capybara
 images by Michael Jastremski 
 strawberry mansion bridge
@@ -256,7 +256,6 @@ westminster cathederal sign
 London Tube 
 eiffel tower at night
 tulipe flower
-                
-                
-                ''')
+    '''
+    st.markdown(multi)
 
