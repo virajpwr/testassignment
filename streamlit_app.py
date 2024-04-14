@@ -195,7 +195,7 @@ def search_query(input_query, docs, inv):
 
 genre = st.sidebar.radio(
     "Please select type",
-    ('Image Search', 'Seach Examples'))
+    ('Image Search', 'Search Query Examples'))
 
 if genre == 'Image Search':
     st.subheader(
