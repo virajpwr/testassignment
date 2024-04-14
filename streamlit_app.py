@@ -202,6 +202,8 @@ if genre == 'Image Search':
     '**👈 Please select the radio button on the sidebar for search query examples**')
     st.subheader(
         'Image search engine')
+    
+    st.link_button("Image source", "https://openphoto.net")
     with open(r'./data/image_data.pkl', 'rb') as f:
         image_data = pickle.load(f)
         
@@ -217,7 +219,6 @@ if genre == 'Image Search':
 
     widgetuser_input = st.text_input('Enter a search query') 
     
-    st.link_button("Image source", "https://openphoto.net")
     
     pattern = r'\b[A-Za-z]+\b'
     query_words = re.findall(pattern, widgetuser_input)
