@@ -240,22 +240,39 @@ if genre == 'Image Search':
 if genre == 'Seach Examples':
     
     multi = '''white horse in a field
-african capybara
-images by Michael Jastremski 
-strawberry mansion bridge
-philadelphia river 
-croatian wild duck
-cute rabbit
-green tomatoes on vine
-daffodil yellow petals
-Scuba diving with coral reef
-national park in croatia
-japanese temple
-Tokyo Disney Land
-westminster cathederal sign
-London Tube 
-eiffel tower at night
-tulipe flower
+
+                african capybara
+            
+            images by Michael Jastremski 
+            
+            strawberry mansion bridge
+            
+            philadelphia river 
+
+            croatian wild duck
+
+            cute rabbit
+
+            green tomatoes on vine
+
+            daffodil yellow petals
+
+            Scuba diving with coral reef
+
+            national park in croatia
+
+            japanese temple
+
+
+            Tokyo Disney Land
+            
+            westminster cathederal sign
+
+            London Tube 
+
+            eiffel tower at night
+
+            tulipe flower
     '''
     st.markdown(multi)
 
