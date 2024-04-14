@@ -174,7 +174,7 @@ def generate_index(doc_collection):
 st.title('Assignment 2') 
 
 st.subheader(
-    '**👈 Please select the options on the sidebar for search query examples**')
+    '**👈 Please select the radio button on the sidebar for search query examples**')
 
 # Add a welcome message 
 st.subheader(
@@ -237,7 +237,7 @@ if genre == 'Image Search':
         st.image(value["url"], caption="searched image")
 
 
-if genre == 'Seach Examples':
+if genre == 'Search Query Examples':
     st.subheader(
     'Search query examples')
     
