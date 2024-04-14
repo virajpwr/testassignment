@@ -173,12 +173,6 @@ def generate_index(doc_collection):
 # Set the app title 
 st.title('Assignment 2') 
 
-st.subheader(
-    '**👈 Please select the radio button on the sidebar for search query examples**')
-
-# Add a welcome message 
-st.subheader(
-    'Image search engine')
 
 
 def search_query(input_query, docs, inv):
@@ -204,6 +198,10 @@ genre = st.sidebar.radio(
     ('Image Search', 'Seach Examples'))
 
 if genre == 'Image Search':
+    st.subheader(
+    '**👈 Please select the radio button on the sidebar for search query examples**')
+    st.subheader(
+        'Image search engine')
     with open(r'./data/image_data.pkl', 'rb') as f:
         image_data = pickle.load(f)
         
