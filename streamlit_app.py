@@ -217,6 +217,8 @@ if genre == 'Image Search':
 
     widgetuser_input = st.text_input('Enter a search query') 
     
+    st.link_button("Image source", "https://openphoto.net")
+    
     pattern = r'\b[A-Za-z]+\b'
     query_words = re.findall(pattern, widgetuser_input)
 
