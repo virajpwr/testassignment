@@ -266,7 +266,6 @@ if genre == 'Seach Examples':
 
             japanese temple
 
-
             Tokyo Disney Land
             
             westminster cathederal sign
