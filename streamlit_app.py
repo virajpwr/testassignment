@@ -238,10 +238,13 @@ if genre == 'Image Search':
 
 
 if genre == 'Seach Examples':
+    st.subheader(
+    'Search query examples')
     
-    multi = '''white horse in a field
+    multi = '''
+            white horse in a field
 
-                african capybara
+            african capybara
             
             images by Michael Jastremski 
             
